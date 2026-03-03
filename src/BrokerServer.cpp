@@ -8,7 +8,7 @@
 #include <fcntl.h>
 #include <sys/socket.h>
 #include <span>
-#include "include/config.h"
+#include "../include/config.h"
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <sys/mman.h>
