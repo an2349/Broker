@@ -19,7 +19,29 @@
 #include "../include/Protocol.h"
 
 class Workers {
-    public:
-    static void even_loop(unsigned int core_id, udp_packet_t *w_offset) ;
+private:
+    int worker_fd;
+    struct io_uring ring;
+    unsigned int core_id;
+    udp_packet_t * w_offset;
+
+    void setup_any();
+
+    void setup_socket();
+
+public:
+    Workers(unsigned int id, udp_packet_t * w_offset);
+
+    //  static void even_loop(unsigned int core_id, udp_packet_t *w_offset) ;
+
+    //~Worker();
+
+    //Worker(const Workers &) = delete;
+
+    //Workers &operator=(const Workers &) = delete;
+
+    void init_uring();
+
+    void working();
 };
 #endif //MQTT_UDP_TRANSPORT

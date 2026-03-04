@@ -22,8 +22,8 @@ udp_packet_t* Mem_manager::setup_mem_package_pool(size_t pool_size) {
                 return nullptr;
             }
         }
-        madvise(ptr, pool_size, MADV_WILLNEED | MADV_SEQUENTIAL);
-        memset(ptr, 0, pool_size);
+        //madvise(ptr, pool_size, MADV_WILLNEED | MADV_SEQUENTIAL);
+        //memset(ptr, 0, pool_size);
 
         return static_cast<udp_packet_t *>(ptr);
     }

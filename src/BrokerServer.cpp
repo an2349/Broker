@@ -15,6 +15,7 @@
 #include <liburing.h>
 #include <thread>
 
+#include "Mem_manager.h"
 #include "Workers.h"
 #include "../include/Protocol.h"
 
@@ -41,7 +42,7 @@ protected:
 };
 
 void BrokerServer::start(unsigned int n) {
-    //tao be de du lieu udp do vao
+
     size_t pool_size = (size_t)n *  MAX_PACKAGE * sizeof(udp_packet_t);
     pool = Mem_manager::setup_mem_package_pool(pool_size);
     if (!pool) {
@@ -73,8 +74,9 @@ void BrokerServer::start(unsigned int n) {
 void BrokerServer::spawn_worker(unsigned int core_id, pid_t *workers_pid, udp_packet_t *w_offset) {
     pid_t pid = fork();
     if (pid == 0) {
-        Workers::even_loop(core_id, w_offset);
-        exit(0);
+        Workers worker(core_id, w_offset);
+        //exit(0);
+        worker.working();
     } else if (pid > 0) {
         workers_pid[core_id] = pid;
     } else {
